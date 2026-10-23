@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_job_requisition_user,hr.job.requisition.user,model_hr_job_requisition,base.group_user,1,1,1,1
+access_hr_job_channel_user,hr.job.channel.user,model_hr_job_channel,base.group_user,1,1,1,1
+access_hr_job_applicant_user,hr.job.applicant.user,model_hr_job_applicant,base.group_user,1,1,1,1

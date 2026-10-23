@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- List View -->
+    <record id="view_hr_job_requisition_list" model="ir.ui.view">
+        <field name="name">hr.job.requisition.list</field>
+        <field name="model">hr.job.requisition</field>
+        <field name="arch" type="xml">
+            <list string="Job Requisitions" multi_edit="1">
+                <field name="job_id"/>
+                <field name="job_title"/>
+                <field name="department_name"/>
+                <field name="seniority_level"/>
+                <field name="employment_type"/>
+                <field name="number_of_openings"/>
+                <field name="budget_approval_status" widget="badge" 
+                       decoration-success="budget_approval_status == 'approved'" 
+                       decoration-warning="budget_approval_status == 'pending'" 
+                       decoration-danger="budget_approval_status == 'rejected'"/>
+                <field name="submitted_at" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_hr_job_requisition_form" model="ir.ui.view">
+        <field name="name">hr.job.requisition.form</field>
+        <field name="model">hr.job.requisition</field>
+        <field name="arch" type="xml">
+            <form string="Job Requisition">
+                <header>
+                    <field name="budget_approval_status" widget="statusbar" statusbar_visible="draft,pending,approved,rejected"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="job_title" class="oe_edit_only"/>
+                        <h1>
+                            <field name="job_title" placeholder="e.g. AI Automation Engineer"/>
+                        </h1>
+                        <h3>
+                            <field name="job_id" placeholder="Job ID (e.g. JOB-12345)"/>
+                        </h3>
+                    </div>
+
+                    <group>
+                        <group string="Basic Details">
+                            <field name="recruiter_email"/>
+                            <field name="department_name"/>
+                            <field name="alternative_job_title"/>
+                            <field name="seniority_level"/>
+                            <field name="employment_type"/>
+                            <field name="number_of_openings"/>
+                            <field name="reason_for_opening"/>
+                            <field name="job_description"/>
+                        </group>
+                        <group string="Logistics &amp; Budget">
+                            <field name="work_arrangement"/>
+                            <field name="country_name"/>
+                            <field name="city"/>
+                            <field name="expected_start_date"/>
+                            <field name="application_deadline"/>
+                            <field name="salary_range"/>
+                            <field name="approver_name"/>
+                            <field name="application_url" widget="url"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Requirements &amp; Experience" name="requirements">
+                            <group>
+                                <group string="Experience &amp; Education">
+                                    <label for="min_years_experience" string="Experience (Years)"/>
+                                    <div class="o_row">
+                                        <field name="min_years_experience"/>
+                                        <span>to</span>
+                                        <field name="max_years_experience"/>
+                                        <span>Years</span>
+                                    </div>
+                                    <field name="required_education"/>
+                                    <field name="additional_experience_req"/>
+                                    <field name="additional_candidate_req"/>
+                                </group>
+                                <group string="Languages &amp; Tools">
+                                    <field name="english_level"/>
+                                    <field name="other_languages"/>
+                                    <field name="required_tools"/>
+                                    <field name="advertisement_language"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Technical Skills" name="tech_skills">
+                            <group>
+                                <field name="required_technical_skills"/>
+                                <field name="additional_technical_skills"/>
+                                <field name="must_have_skills"/>
+                            </group>
+                        </page>
+
+                        <page string="Soft Skills" name="soft_skills">
+                            <group>
+                                <field name="required_soft_skills"/>
+                                <field name="additional_soft_skills"/>
+                                <field name="most_important_soft_skills"/>
+                            </group>
+                        </page>
+
+                        <page string="Description &amp; Publishing" name="description">
+                            <group string="Role Summary">
+                                <field name="role_summary" nolabel="1" placeholder="Brief summary of the role..."/>
+                            </group>
+                            <group string="Key Responsibilities">
+                                <field name="key_responsibilities" nolabel="1"/>
+                            </group>
+                            <group string="Publishing &amp; Notes">
+                                <field name="publishing_channels"/>
+                                <field name="specific_instructions"/>
+                                <field name="additional_notes"/>
+                            </group>
+                        </page>
+                        <page string="Applicants" name="applicants">
+                            <field name="applicant_ids" readonly="1">
+                                <list string="Applicants">
+                                    <field name="application_id"/>
+                                    <field name="full_name"/>
+                                    <field name="score" widget="badge"
+                                           decoration-success="score &gt;= 70"
+                                           decoration-warning="score &gt;= 50 and score &lt; 70"
+                                           decoration-danger="score &lt; 50"/>
+                                    <field name="email"/>
+                                    <field name="phone_number"/>
+                                    <field name="current_job_title"/>
+                                    <field name="years_experience"/>
+                                    <field name="years_automation_experience"/>
+                                    <field name="preferred_work_arrangement"/>
+                                    <field name="submitted_at"/>
+                                    <field name="status" widget="badge"
+                                           decoration-info="status == 'new'"
+                                           decoration-warning="status == 'under_review'"
+                                           decoration-primary="status == 'shortlisted'"
+                                           decoration-danger="status == 'rejected'"
+                                           decoration-success="status == 'hired'"/>
+                                </list>
+                                <form string="Applicant">
+                                    <sheet>
+                                        <group>
+                                            <group string="Personal Information">
+                                                <field name="full_name"/>
+                                                <field name="application_id"/>
+                                                <field name="email"/>
+                                                <field name="phone_number"/>
+                                                <field name="location"/>
+                                                <field name="status"/>
+                                            </group>
+                                            <group string="Logistics &amp; Compensation">
+                                                <field name="preferred_work_arrangement"/>
+                                                <field name="earliest_start_date"/>
+                                                <field name="expected_salary"/>
+                                                <field name="submitted_at"/>
+                                                <field name="received_at"/>
+                                            </group>
+                                        </group>
+                                        <group>
+                                            <group string="Experience &amp; Education">
+                                                <field name="current_job_title"/>
+                                                <field name="years_experience"/>
+                                                <field name="years_automation_experience"/>
+                                                <field name="education_level"/>
+                                                <field name="english_level"/>
+                                                <field name="other_languages"/>
+                                            </group>
+                                            <group string="Links &amp; Attachments">
+                                                <field name="linkedin_url" widget="url"/>
+                                                <field name="portfolio_url" widget="url"/>
+                                                <field name="live_project_url" widget="url"/>
+                                                <field name="cv_filename"/>
+                                                <field name="cv_url" widget="url"/>
+                                                <field name="form_url" widget="url"/>
+                                                <field name="form_mode"/>
+                                            </group>
+                                        </group>
+                                        <group string="Technical &amp; Tools">
+                                            <field name="technical_skills"/>
+                                            <field name="other_tools"/>
+                                        </group>
+                                        <group string="Automation / AI Projects">
+                                            <field name="automation_workflow_description"/>
+                                        </group>
+                                        <group string="Motivation &amp; Notes">
+                                            <field name="motivation"/>
+                                            <field name="additional_info"/>
+                                            <field name="consent"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Standalone Applicant List View -->
+    <record id="view_hr_job_applicant_list" model="ir.ui.view">
+        <field name="name">hr.job.applicant.list</field>
+        <field name="model">hr.job.applicant</field>
+        <field name="arch" type="xml">
+            <list string="Applicants">
+                <field name="application_id"/>
+                <field name="full_name"/>
+                <field name="score" widget="badge"
+                       decoration-success="score &gt;= 70"
+                       decoration-warning="score &gt;= 50 and score &lt; 70"
+                       decoration-danger="score &lt; 50"/>
+                <field name="job_requisition_id"/>
+                <field name="email"/>
+                <field name="phone_number"/>
+                <field name="current_job_title"/>
+                <field name="years_experience"/>
+                <field name="years_automation_experience"/>
+                <field name="preferred_work_arrangement"/>
+                <field name="submitted_at"/>
+                <field name="status" widget="badge"
+                       decoration-info="status == 'new'"
+                       decoration-warning="status == 'under_review'"
+                       decoration-primary="status == 'shortlisted'"
+                       decoration-danger="status == 'rejected'"
+                       decoration-success="status == 'hired'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Standalone Applicant Form View -->
+    <record id="view_hr_job_applicant_form" model="ir.ui.view">
+        <field name="name">hr.job.applicant.form</field>
+        <field name="model">hr.job.applicant</field>
+        <field name="arch" type="xml">
+            <form string="Job Applicant">
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="new,under_review,shortlisted,rejected,hired"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="full_name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="full_name"/>
+                        </h1>
+                        <h3>
+                            <field name="application_id" placeholder="Application ID"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group string="Personal &amp; Job">
+                            <field name="job_requisition_id"/>
+                            <field name="email"/>
+                            <field name="phone_number"/>
+                            <field name="location"/>
+                        </group>
+                        <group string="AI Evaluation Overview">
+                            <field name="score" widget="progressbar"/>
+                            <field name="scored_at"/>
+                            <field name="preferred_work_arrangement"/>
+                            <field name="earliest_start_date"/>
+                            <field name="expected_salary"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Experience &amp; Education">
+                            <field name="current_job_title"/>
+                            <field name="years_experience"/>
+                            <field name="years_automation_experience"/>
+                            <field name="education_level"/>
+                            <field name="english_level"/>
+                            <field name="other_languages"/>
+                        </group>
+                        <group string="Links &amp; Attachments">
+                            <field name="linkedin_url" widget="url"/>
+                            <field name="portfolio_url" widget="url"/>
+                            <field name="live_project_url" widget="url"/>
+                            <field name="cv_filename"/>
+                            <field name="cv_url" widget="url"/>
+                            <field name="form_url" widget="url"/>
+                            <field name="form_mode"/>
+                            <field name="submitted_at"/>
+                            <field name="received_at"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="AI Evaluation &amp; Screening" name="ai_evaluation">
+                            <group string="AI Summary">
+                                <field name="score_summary" nolabel="1" placeholder="AI Score Summary..."/>
+                            </group>
+                            <group>
+                                <group string="Strengths">
+                                    <field name="strengths" nolabel="1"/>
+                                </group>
+                                <group string="Gaps">
+                                    <field name="gaps" nolabel="1"/>
+                                </group>
+                            </group>
+                            <group string="Requirement Evidence">
+                                <field name="evidence" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="Skills &amp; Tools" name="skills_tools">
+                            <group>
+                                <field name="technical_skills"/>
+                                <field name="other_tools"/>
+                            </group>
+                        </page>
+                        <page string="Automation / AI Workflow" name="automation_desc">
+                            <group>
+                                <field name="automation_workflow_description"/>
+                            </group>
+                        </page>
+                        <page string="Motivation &amp; Notes" name="motivation_tab">
+                            <group>
+                                <field name="motivation"/>
+                                <field name="additional_info"/>
+                                <field name="consent"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Applicant Action -->
+    <record id="action_hr_job_applicant" model="ir.actions.act_window">
+        <field name="name">Job Applicants</field>
+        <field name="res_model">hr.job.applicant</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hr_job_requisition" model="ir.actions.act_window">
+        <field name="name">Job Requisitions</field>
+        <field name="res_model">hr.job.requisition</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

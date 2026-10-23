@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="menu_hr_recruitment_root"
+        name="Recruitment App"
+        web_icon="base,static/description/icon.png"
+        sequence="30"
+    />
+
+    <menuitem
+        id="menu_hr_job_requisitions"
+        name="Job Requisitions"
+        parent="menu_hr_recruitment_root"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_hr_job_requisition_list"
+        name="All Requisitions"
+        parent="menu_hr_job_requisitions"
+        action="action_hr_job_requisition"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_hr_job_applicants_root"
+        name="Job Applicants"
+        parent="menu_hr_recruitment_root"
+        sequence="20"
+    />
+
+    <menuitem
+        id="menu_hr_job_applicant_list"
+        name="All Applicants"
+        parent="menu_hr_job_applicants_root"
+        action="action_hr_job_applicant"
+        sequence="10"
+    />
+
+</odoo>
