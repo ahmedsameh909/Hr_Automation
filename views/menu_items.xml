@@ -4,7 +4,7 @@
     <menuitem
         id="menu_hr_recruitment_root"
         name="Recruitment App"
-        web_icon="base,static/description/icon.png"
+        web_icon="hr_automation,static/description/icon.svg"
         sequence="30"
     />
 
@@ -36,6 +36,23 @@
         parent="menu_hr_job_applicants_root"
         action="action_hr_job_applicant"
         sequence="10"
+    />
+
+    <record id="action_hr_automation_api_settings" model="ir.actions.act_window">
+        <field name="name">API Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'hr_automation', 'bin_size': False}</field>
+    </record>
+
+    <menuitem
+        id="menu_hr_automation_api_settings"
+        name="API Settings"
+        parent="menu_hr_recruitment_root"
+        action="action_hr_automation_api_settings"
+        groups="base.group_system"
+        sequence="90"
     />
 
 </odoo>

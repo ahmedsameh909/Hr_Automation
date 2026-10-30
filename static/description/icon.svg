@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <!-- Background radial gradient -->
+    <radialGradient id="bg-grad" cx="50%" cy="40%" r="60%">
+      <stop offset="0%"   stop-color="#2D2A6E"/>
+      <stop offset="100%" stop-color="#1E1B4B"/>
+    </radialGradient>
+
+    <!-- Emerald glow filter -->
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Circuit line clip -->
+    <clipPath id="inner-clip">
+      <rect x="10" y="10" width="108" height="108" rx="22"/>
+    </clipPath>
+  </defs>
+
+  <!-- ── Background rounded rect ── -->
+  <rect x="4" y="4" width="120" height="120" rx="24" fill="url(#bg-grad)"/>
+
+  <!-- Subtle inner border -->
+  <rect x="4" y="4" width="120" height="120" rx="24"
+        fill="none" stroke="#7C3AED" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- Circuit grid lines (background detail) -->
+  <!-- ══════════════════════════════════════ -->
+  <g clip-path="url(#inner-clip)" opacity="0.18" stroke="#7C3AED" stroke-width="1" fill="none">
+    <!-- Horizontal rails -->
+    <line x1="10" y1="35"  x2="118" y2="35"/>
+    <line x1="10" y1="93"  x2="118" y2="93"/>
+    <!-- Vertical rails -->
+    <line x1="35"  y1="10" x2="35"  y2="118"/>
+    <line x1="93"  y1="10" x2="93"  y2="118"/>
+    <!-- Diagonal accents -->
+    <line x1="10" y1="10" x2="35"  y2="35"/>
+    <line x1="118" y1="10" x2="93"  y2="35"/>
+    <line x1="10" y1="118" x2="35"  y2="93"/>
+    <line x1="118" y1="118" x2="93" y2="93"/>
+  </g>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- Person / Profile silhouette            -->
+  <!-- ══════════════════════════════════════ -->
+  <!-- Head circle -->
+  <circle cx="64" cy="44" r="16" fill="#7C3AED"/>
+  <!-- Shoulder arc / body -->
+  <path d="M 34 88 Q 34 66 64 66 Q 94 66 94 88" fill="#7C3AED"/>
+
+  <!-- Inner head highlight -->
+  <circle cx="64" cy="44" r="10" fill="#9D65F5" opacity="0.55"/>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- Circuit / Automation overlay on person -->
+  <!-- ══════════════════════════════════════ -->
+  <!-- Left circuit arm -->
+  <g filter="url(#glow)" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round">
+    <polyline points="34,88 22,88 22,72 30,72"/>
+    <circle cx="30" cy="72" r="3" fill="#10B981" stroke="none"/>
+    <polyline points="22,80 16,80 16,62 22,62"/>
+    <circle cx="16" cy="62" r="2.5" fill="#10B981" stroke="none"/>
+  </g>
+
+  <!-- Right circuit arm -->
+  <g filter="url(#glow)" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round">
+    <polyline points="94,88 106,88 106,72 98,72"/>
+    <circle cx="98" cy="72" r="3" fill="#10B981" stroke="none"/>
+    <polyline points="106,80 112,80 112,62 106,62"/>
+    <circle cx="112" cy="62" r="2.5" fill="#10B981" stroke="none"/>
+  </g>
+
+  <!-- Top circuit — crown / AI indicator -->
+  <g filter="url(#glow)" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round">
+    <polyline points="64,28 64,18 52,18 52,12"/>
+    <circle cx="52" cy="12" r="2.5" fill="#10B981" stroke="none"/>
+    <polyline points="64,18 76,18 76,12"/>
+    <circle cx="76" cy="12" r="2.5" fill="#10B981" stroke="none"/>
+  </g>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- Gear icon (bottom-right corner)        -->
+  <!-- ══════════════════════════════════════ -->
+  <g transform="translate(88, 88)" filter="url(#glow)">
+    <!-- Gear body -->
+    <circle cx="0" cy="0" r="10" fill="none" stroke="#10B981" stroke-width="2.5"/>
+    <circle cx="0" cy="0" r="5"  fill="#10B981" opacity="0.9"/>
+    <!-- Gear teeth (8 teeth) -->
+    <g stroke="#10B981" stroke-width="2.5" stroke-linecap="round">
+      <line x1="0"   y1="-10"  x2="0"   y2="-14"/>
+      <line x1="7"   y1="-7"   x2="9.9" y2="-9.9"/>
+      <line x1="10"  y1="0"    x2="14"  y2="0"/>
+      <line x1="7"   y1="7"    x2="9.9" y2="9.9"/>
+      <line x1="0"   y1="10"   x2="0"   y2="14"/>
+      <line x1="-7"  y1="7"    x2="-9.9" y2="9.9"/>
+      <line x1="-10" y1="0"    x2="-14" y2="0"/>
+      <line x1="-7"  y1="-7"   x2="-9.9" y2="-9.9"/>
+    </g>
+  </g>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- Bottom progress bar / pipeline strip   -->
+  <!-- ══════════════════════════════════════ -->
+  <rect x="18" y="110" width="92" height="6" rx="3" fill="#13112F"/>
+  <rect x="18" y="110" width="58" height="6" rx="3" fill="#10B981" opacity="0.9"/>
+  <!-- Dot markers -->
+  <circle cx="18"  cy="113" r="3.5" fill="#10B981"/>
+  <circle cx="45"  cy="113" r="3.5" fill="#10B981"/>
+  <circle cx="76"  cy="113" r="3.5" fill="#10B981"/>
+  <circle cx="110" cy="113" r="3.5" fill="#2D2A6E" stroke="#7C3AED" stroke-width="1.5"/>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- Small sparkle dots (energy / AI vibe)  -->
+  <!-- ══════════════════════════════════════ -->
+  <circle cx="20" cy="25" r="2"   fill="#7C3AED" opacity="0.7"/>
+  <circle cx="108" cy="30" r="1.5" fill="#10B981" opacity="0.8"/>
+  <circle cx="15"  cy="50" r="1.5" fill="#10B981" opacity="0.6"/>
+  <circle cx="113" cy="50" r="2"   fill="#7C3AED" opacity="0.7"/>
+</svg>

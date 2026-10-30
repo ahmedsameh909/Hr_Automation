@@ -22,6 +22,70 @@
         </field>
     </record>
 
+    <record id="view_hr_job_requisition_kanban" model="ir.ui.view">
+        <field name="name">hr.job.requisition.kanban</field>
+        <field name="model">hr.job.requisition</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="budget_approval_status" sample="1">
+                <field name="job_id"/>
+                <field name="job_title"/>
+                <field name="department_name"/>
+                <field name="seniority_level"/>
+                <field name="employment_type"/>
+                <field name="number_of_openings"/>
+                <field name="work_arrangement"/>
+                <field name="budget_approval_status"/>
+                <field name="submitted_at"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_hr_requisition_card p-3">
+                            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                                <strong class="text-truncate"><field name="job_title"/></strong>
+                                <field name="budget_approval_status" widget="badge"
+                                       decoration-success="budget_approval_status == 'approved'"
+                                       decoration-warning="budget_approval_status == 'pending'"
+                                       decoration-danger="budget_approval_status == 'rejected'"
+                                       decoration-info="budget_approval_status == 'draft'"/>
+                            </div>
+                            <div class="text-muted mb-2"><field name="job_id"/> · <field name="department_name"/></div>
+                            <div class="d-flex flex-wrap gap-2 mb-2">
+                                <span class="badge rounded-pill text-bg-light"><field name="seniority_level"/></span>
+                                <span class="badge rounded-pill text-bg-light"><field name="employment_type"/></span>
+                                <span class="badge rounded-pill text-bg-light"><field name="work_arrangement"/></span>
+                            </div>
+                            <div class="d-flex justify-content-between border-top pt-2 text-muted">
+                                <span><i class="fa fa-users me-1"/> <field name="number_of_openings"/> openings</span>
+                                <field name="submitted_at"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_hr_job_requisition_search" model="ir.ui.view">
+        <field name="name">hr.job.requisition.search</field>
+        <field name="model">hr.job.requisition</field>
+        <field name="arch" type="xml">
+            <search string="Search Requisitions">
+                <field name="job_id"/>
+                <field name="job_title"/>
+                <field name="department_name"/>
+                <field name="recruiter_email"/>
+                <filter string="Pending Approval" name="pending" domain="[('budget_approval_status', '=', 'pending')]"/>
+                <filter string="Approved" name="approved" domain="[('budget_approval_status', '=', 'approved')]"/>
+                <filter string="Draft" name="draft" domain="[('budget_approval_status', '=', 'draft')]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Approval Status" name="groupby_status" context="{'group_by': 'budget_approval_status'}"/>
+                    <filter string="Department" name="groupby_department" context="{'group_by': 'department_name'}"/>
+                    <filter string="Employment Type" name="groupby_employment" context="{'group_by': 'employment_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <!-- Form View -->
     <record id="view_hr_job_requisition_form" model="ir.ui.view">
         <field name="name">hr.job.requisition.form</field>
@@ -231,6 +295,73 @@
         </field>
     </record>
 
+    <record id="view_hr_job_applicant_kanban" model="ir.ui.view">
+        <field name="name">hr.job.applicant.kanban</field>
+        <field name="model">hr.job.applicant</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="status" sample="1">
+                <field name="full_name"/>
+                <field name="application_id"/>
+                <field name="job_requisition_id"/>
+                <field name="email"/>
+                <field name="current_job_title"/>
+                <field name="years_experience"/>
+                <field name="score"/>
+                <field name="status"/>
+                <field name="submitted_at"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_hr_applicant_card p-3">
+                            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                                <strong class="text-truncate"><field name="full_name"/></strong>
+                                <field name="score" widget="badge"
+                                       decoration-success="score &gt;= 70"
+                                       decoration-warning="score &gt;= 50 and score &lt; 70"
+                                       decoration-danger="score &lt; 50"/>
+                            </div>
+                            <div class="text-muted mb-2"><field name="application_id"/> · <field name="job_requisition_id"/></div>
+                            <div class="mb-1"><i class="fa fa-envelope me-1"/> <field name="email"/></div>
+                            <div class="text-muted"><i class="fa fa-briefcase me-1"/> <field name="current_job_title"/> · <field name="years_experience"/> years</div>
+                            <div class="d-flex justify-content-between border-top pt-2 mt-2 text-muted">
+                                <field name="submitted_at"/>
+                                <field name="status" widget="badge"
+                                       decoration-info="status == 'new'"
+                                       decoration-warning="status == 'under_review'"
+                                       decoration-primary="status == 'shortlisted'"
+                                       decoration-danger="status == 'rejected'"
+                                       decoration-success="status == 'hired'"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_hr_job_applicant_search" model="ir.ui.view">
+        <field name="name">hr.job.applicant.search</field>
+        <field name="model">hr.job.applicant</field>
+        <field name="arch" type="xml">
+            <search string="Search Applicants">
+                <field name="full_name"/>
+                <field name="application_id"/>
+                <field name="job_requisition_id"/>
+                <field name="email"/>
+                <field name="current_job_title"/>
+                <filter string="New" name="new" domain="[('status', '=', 'new')]"/>
+                <filter string="Under Review" name="under_review" domain="[('status', '=', 'under_review')]"/>
+                <filter string="Shortlisted" name="shortlisted" domain="[('status', '=', 'shortlisted')]"/>
+                <filter string="Hired" name="hired" domain="[('status', '=', 'hired')]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="groupby_status" context="{'group_by': 'status'}"/>
+                    <filter string="Job" name="groupby_job" context="{'group_by': 'job_requisition_id'}"/>
+                    <filter string="Submission Date" name="groupby_submission" context="{'group_by': 'submitted_at:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <!-- Standalone Applicant Form View -->
     <record id="view_hr_job_applicant_form" model="ir.ui.view">
         <field name="name">hr.job.applicant.form</field>
@@ -331,14 +462,16 @@
     <record id="action_hr_job_applicant" model="ir.actions.act_window">
         <field name="name">Job Applicants</field>
         <field name="res_model">hr.job.applicant</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_hr_job_applicant_search"/>
     </record>
 
     <!-- Action -->
     <record id="action_hr_job_requisition" model="ir.actions.act_window">
         <field name="name">Job Requisitions</field>
         <field name="res_model">hr.job.requisition</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_hr_job_requisition_search"/>
     </record>
 
 </odoo>

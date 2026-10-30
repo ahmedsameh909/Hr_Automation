@@ -1,4 +1,5 @@
 import json
+import hmac
 import logging
 from datetime import datetime, timezone
 from odoo import http
@@ -6,7 +7,15 @@ from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
-VALID_API_KEY = "Ahmedsameh90908080##"
+def _is_valid_api_key(provided_key):
+    configured_key = request.env['ir.config_parameter'].sudo().get_param(
+        'hr_automation.api_key'
+    )
+    return bool(
+        configured_key
+        and isinstance(provided_key, str)
+        and hmac.compare_digest(provided_key, configured_key)
+    )
 
 def parse_list(val):
     if isinstance(val, list):
@@ -95,7 +104,7 @@ class HrJobRequisitionAPI(http.Controller):
 
             provided_key = auth_header or token_in_params
 
-            if not provided_key or provided_key != VALID_API_KEY:
+            if not _is_valid_api_key(provided_key):
                 return {
                     'status': 'unauthorized',
                     'message': 'Invalid or missing API Key.'
@@ -211,7 +220,7 @@ class HrJobRequisitionAPI(http.Controller):
         auth_header = request.httprequest.headers.get('x-api-key') or request.httprequest.headers.get('Authorization')
         if auth_header and auth_header.startswith('Bearer '):
             auth_header = auth_header.removeprefix('Bearer ').strip()
-        if (auth_header or data.get('api_key')) != VALID_API_KEY:
+        if not _is_valid_api_key(auth_header or data.get('api_key')):
             return {'status': 'unauthorized', 'message': 'Invalid or missing API Key.'}
 
         requisition_model = request.env['hr.job.requisition'].sudo()
@@ -306,7 +315,7 @@ class HrJobRequisitionAPI(http.Controller):
                 auth_header = auth_header.removeprefix('Bearer ').strip()
 
             api_key = auth_header or data.get('api_key') or request.params.get('api_key') or kwargs.get('api_key')
-            if api_key != VALID_API_KEY:
+            if not _is_valid_api_key(api_key):
                 return request.make_json_response({
                     'status': 'unauthorized',
                     'message': 'Invalid or missing API Key.'
@@ -426,7 +435,7 @@ class HrJobRequisitionAPI(http.Controller):
                 auth_header = auth_header.removeprefix('Bearer ').strip()
 
             api_key = auth_header or data.get('api_key') or request.params.get('api_key') or kwargs.get('api_key')
-            if api_key != VALID_API_KEY:
+            if not _is_valid_api_key(api_key):
                 return request.make_json_response({
                     'status': 'unauthorized',
                     'message': 'Invalid or missing API Key.'
@@ -576,7 +585,7 @@ class HrJobRequisitionAPI(http.Controller):
                 or body_data.get('api_key')
                 or kwargs.get('api_key')
             )
-            if not api_key or api_key != VALID_API_KEY:
+            if not _is_valid_api_key(api_key):
                 return request.make_json_response({
                     'status': 'unauthorized',
                     'message': 'Invalid or missing API Key. Please provide api_key in body or params or x-api-key in headers.'
@@ -662,7 +671,7 @@ class HrJobRequisitionAPI(http.Controller):
                 or body_data.get('api_key')
                 or kwargs.get('api_key')
             )
-            if not api_key or api_key != VALID_API_KEY:
+            if not _is_valid_api_key(api_key):
                 return request.make_json_response({
                     'status': 'unauthorized',
                     'message': 'Invalid or missing API Key.'

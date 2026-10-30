@@ -1,0 +1,379 @@
+// ==========================================================================
+// HR Automation — Smooth Modern Aesthetic (Odoo 18)
+// Brand: Indigo/Navy (#1E1B4B) | Purple (#7C3AED) | Emerald (#10B981)
+// Surface: Light Lavender (#FAF5FF / #F3E8FF)
+// ==========================================================================
+
+:root {
+  --hr-primary:         #1E1B4B;
+  --hr-primary-light:   #2E2A72;
+  --hr-accent-purple:   #7C3AED;
+  --hr-accent-purple-lt:#8B5CF6;
+  --hr-accent-emerald:  #10B981;
+  --hr-accent-emerald-lt:#34D399;
+  --hr-bg-lavender:     #FAF5FF;
+  --hr-bg-subtle:       #F3E8FF;
+  --hr-surface-card:    #FFFFFF;
+  --hr-text-main:       #0F172A;
+  --hr-text-muted:      #64748B;
+  --hr-border-color:    #E9D5FF;
+  --hr-shadow-soft:     0 4px 20px rgba(30, 27, 75, 0.06);
+  --hr-shadow-hover:    0 12px 28px rgba(124, 58, 237, 0.14);
+  --hr-radius:          14px;
+  --hr-radius-pill:     9999px;
+  --hr-transition:      all 0.25s ease-in-out;
+}
+
+// --------------------------------------------------------------------------
+// Micro-Animations
+// --------------------------------------------------------------------------
+@keyframes hrFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hrGlowPulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50%      { transform: scale(1.3); opacity: 0.5; }
+}
+
+// --------------------------------------------------------------------------
+// Odoo 18 Kanban Record Reset & Scoping
+// --------------------------------------------------------------------------
+.o_kanban_renderer {
+  .o_kanban_record:has(.o_smooth_kanban_card),
+  .o_kanban_record:has(.o_hr_requisition_card),
+  .o_kanban_record:has(.o_hr_applicant_card) {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-bottom: 12px !important;
+    overflow: visible !important;
+  }
+}
+
+.o_hr_kanban_view,
+.o_hr_applicant_kanban {
+  background-color: var(--hr-bg-lavender) !important;
+
+  .o_kanban_group {
+    background: rgba(243, 232, 255, 0.45) !important;
+    border-radius: var(--hr-radius);
+    border: 1px solid rgba(233, 213, 255, 0.6);
+    padding: 10px;
+  }
+
+  .o_kanban_header .o_kanban_header_title {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--hr-primary) !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Smooth Modern Kanban Cards
+// --------------------------------------------------------------------------
+.o_smooth_kanban_card,
+.o_hr_requisition_card,
+.o_hr_applicant_card {
+  background: var(--hr-surface-card) !important;
+  border-radius: var(--hr-radius) !important;
+  border: 1px solid var(--hr-border-color) !important;
+  box-shadow: var(--hr-shadow-soft) !important;
+  transition: var(--hr-transition) !important;
+  animation: hrFadeUp 0.3s ease-out both;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+
+  // Top gradient accent line
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--hr-accent-purple), var(--hr-accent-emerald));
+    opacity: 0.85;
+  }
+
+  &:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--hr-shadow-hover) !important;
+    border-color: rgba(124, 58, 237, 0.35) !important;
+  }
+
+  strong, b, .h5, .h6 {
+    color: var(--hr-primary) !important;
+    font-weight: 600;
+  }
+
+  .text-muted {
+    color: var(--hr-text-muted) !important;
+  }
+
+  .border-top {
+    border-color: rgba(233, 213, 255, 0.8) !important;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Pastel Badges with Glowing Status Dots
+// --------------------------------------------------------------------------
+.o_status_badge_custom,
+.o_hr_kanban_view .badge,
+.o_hr_applicant_kanban .badge,
+.o_hr_form .badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 4px 12px !important;
+  border-radius: var(--hr-radius-pill) !important;
+  font-size: 0.73rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  border: 1px solid transparent !important;
+  transition: var(--hr-transition) !important;
+
+  // Glowing dot
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-right: 6px;
+    background-color: currentColor;
+    box-shadow: 0 0 6px currentColor;
+  }
+
+  // Approved / Hired / Success
+  &.badge-success,
+  &.text-bg-success,
+  &[class*="approved"],
+  &[class*="hired"] {
+    background-color: #ECFDF5 !important;
+    color: #065F46 !important;
+    border-color: #A7F3D0 !important;
+    &::before {
+      background-color: var(--hr-accent-emerald);
+      box-shadow: 0 0 8px var(--hr-accent-emerald);
+    }
+  }
+
+  // Pending / Under Review / Warning
+  &.badge-warning,
+  &.text-bg-warning,
+  &[class*="pending"],
+  &[class*="under_review"] {
+    background-color: #FAF5FF !important;
+    color: #6B21A8 !important;
+    border-color: #E9D5FF !important;
+    &::before {
+      background-color: var(--hr-accent-purple);
+      box-shadow: 0 0 8px var(--hr-accent-purple);
+      animation: hrGlowPulse 1.8s infinite;
+    }
+  }
+
+  // Shortlisted / Primary
+  &.badge-primary,
+  &.text-bg-primary,
+  &[class*="shortlisted"] {
+    background-color: #F3E8FF !important;
+    color: #581C87 !important;
+    border-color: #D8B4FE !important;
+    &::before {
+      background-color: #9333EA;
+      box-shadow: 0 0 6px #9333EA;
+    }
+  }
+
+  // Draft / New / Info
+  &.badge-info,
+  &.text-bg-info,
+  &.badge-secondary,
+  &.text-bg-secondary,
+  &[class*="draft"],
+  &[class*="new"] {
+    background-color: #F1F5F9 !important;
+    color: #334155 !important;
+    border-color: #E2E8F0 !important;
+    &::before {
+      background-color: #64748B;
+      box-shadow: 0 0 5px #64748B;
+    }
+  }
+
+  // Rejected / Danger
+  &.badge-danger,
+  &.text-bg-danger,
+  &[class*="rejected"],
+  &[class*="refused"] {
+    background-color: #FEF2F2 !important;
+    color: #991B1B !important;
+    border-color: #FECACA !important;
+    &::before {
+      background-color: #EF4444;
+      box-shadow: 0 0 8px #EF4444;
+    }
+  }
+
+  &.text-bg-light,
+  &.badge-light {
+    background-color: #FAF5FF !important;
+    color: #6B21A8 !important;
+    border-color: #E9D5FF !important;
+    &::before { display: none; }
+  }
+}
+
+// --------------------------------------------------------------------------
+// Form View & Floating Header Enhancement
+// --------------------------------------------------------------------------
+.o_hr_form,
+.o_form_view.o_hr_form {
+  background-color: var(--hr-bg-lavender) !important;
+
+  .o_form_sheet_bg {
+    background-color: transparent !important;
+    padding-top: 16px !important;
+  }
+
+  .o_form_sheet {
+    background: #FFFFFF !important;
+    border-radius: 16px !important;
+    border: 1px solid var(--hr-border-color) !important;
+    box-shadow: var(--hr-shadow-soft) !important;
+    padding: 32px !important;
+  }
+
+  // Floating Action Header
+  .o_form_statusbar {
+    background: #FFFFFF !important;
+    border-radius: var(--hr-radius) !important;
+    border: 1px solid var(--hr-border-color) !important;
+    box-shadow: 0 2px 12px rgba(30, 27, 75, 0.04) !important;
+    margin: 0 0 16px 0 !important;
+    padding: 6px 14px !important;
+
+    .o_statusbar_status {
+      .btn-secondary.active,
+      .o_arrow_button.o_arrow_button_current {
+        background: linear-gradient(135deg, var(--hr-primary) 0%, var(--hr-accent-purple) 100%) !important;
+        border-color: var(--hr-primary) !important;
+        color: #FFFFFF !important;
+        border-radius: var(--hr-radius-pill) !important;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
+      }
+    }
+  }
+
+  // Custom Top Banner
+  .hr-module-banner {
+    background: linear-gradient(135deg, var(--hr-primary) 0%, var(--hr-accent-purple) 100%) !important;
+    border-radius: var(--hr-radius);
+    padding: 16px 20px;
+    color: #FFFFFF !important;
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.18);
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 100px; height: 100px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hr-banner-icon {
+      color: var(--hr-accent-emerald-lt);
+    }
+    h5 {
+      color: #FFFFFF !important;
+      font-weight: 700;
+    }
+    small {
+      color: rgba(255, 255, 255, 0.85) !important;
+    }
+  }
+
+  // KPI Stat Buttons
+  .oe_button_box .oe_stat_button {
+    background: #FAF5FF !important;
+    border: 1px solid var(--hr-border-color) !important;
+    border-radius: 10px !important;
+    transition: var(--hr-transition) !important;
+
+    &:hover {
+      background: #FFFFFF !important;
+      border-color: var(--hr-accent-purple) !important;
+      transform: translateY(-2px);
+      box-shadow: var(--hr-shadow-soft) !important;
+    }
+
+    .o_stat_info .o_stat_value {
+      color: var(--hr-primary) !important;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    .o_stat_info .o_stat_text {
+      color: var(--hr-accent-purple) !important;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .o_button_icon {
+      color: var(--hr-accent-emerald) !important;
+    }
+  }
+
+  // Custom Chatter Container
+  .o_chatter {
+    background: #FFFFFF !important;
+    border-radius: 16px !important;
+    border: 1px solid var(--hr-border-color) !important;
+    box-shadow: var(--hr-shadow-soft) !important;
+    margin-top: 24px;
+    padding: 20px;
+  }
+}
+
+// --------------------------------------------------------------------------
+// Smooth List View Rows
+// --------------------------------------------------------------------------
+.o_hr_list_view {
+  border-radius: var(--hr-radius);
+  overflow: hidden;
+  border: 1px solid var(--hr-border-color);
+  box-shadow: var(--hr-shadow-soft);
+
+  thead th {
+    background: #FAF5FF !important;
+    color: var(--hr-primary) !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid var(--hr-border-color) !important;
+    padding: 12px 14px !important;
+  }
+
+  tbody tr {
+    transition: var(--hr-transition);
+
+    &:hover td {
+      background-color: #FAF5FF !important;
+    }
+  }
+}

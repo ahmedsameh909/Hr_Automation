@@ -1,0 +1,26 @@
+.o_hr_requisition_card,
+.o_hr_applicant_card {
+    min-height: 160px;
+    border: 1px solid var(--border-color, #dee2e6);
+    border-top: 3px solid var(--o-brand-primary, #714b67);
+    border-radius: 0.6rem;
+    background: var(--o-view-background-color, #fff);
+    box-shadow: 0 0.15rem 0.55rem rgba(39, 32, 44, 0.08);
+    transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+.o_hr_requisition_card:hover,
+.o_hr_applicant_card:hover {
+    box-shadow: 0 0.45rem 1rem rgba(39, 32, 44, 0.14);
+    transform: translateY(-2px);
+}
+
+.o_hr_requisition_card .text-muted,
+.o_hr_applicant_card .text-muted {
+    font-size: 0.82rem;
+}
+
+.o_hr_requisition_card .badge,
+.o_hr_applicant_card .badge {
+    font-weight: 500;
+}

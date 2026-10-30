@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_hr_automation" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.hr.automation</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app name="hr_automation" string="HR Automation" data-string="HR Automation"
+                     groups="base.group_system">
+                    <block title="API Access" name="hr_automation_api_access">
+                        <setting string="API Key"
+                                 help="Clients must send this key in the X-API-Key header or as a Bearer token.">
+                            <field name="hr_automation_api_key" password="True"
+                                   placeholder="Set a strong API key"/>
+                            <div class="text-muted">
+                                Leave empty to disable access to the HR Automation API.
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

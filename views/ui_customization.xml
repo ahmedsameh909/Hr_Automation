@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- UI/UX Enhancements for HR Automation (Odoo 18) -->
+<odoo>
+
+    <!-- 1. Requisition Kanban View Enhancement -->
+    <record id="view_hr_job_requisition_kanban_custom" model="ir.ui.view">
+        <field name="name">hr.job.requisition.kanban.custom</field>
+        <field name="model">hr.job.requisition</field>
+        <field name="inherit_id" ref="hr_automation.view_hr_job_requisition_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="class" add="o_hr_kanban_view" separator=" "/>
+            </xpath>
+            <xpath expr="//t[@t-name='card']/div" position="attributes">
+                <attribute name="class" add="o_smooth_kanban_card" separator=" "/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 2. Requisition Form View Enhancement -->
+    <record id="view_hr_job_requisition_form_custom" model="ir.ui.view">
+        <field name="name">hr.job.requisition.form.custom</field>
+        <field name="model">hr.job.requisition</field>
+        <field name="inherit_id" ref="hr_automation.view_hr_job_requisition_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="o_hr_form" separator=" "/>
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="before">
+                <div class="hr-module-banner d-flex align-items-center gap-3 mb-4">
+                    <div class="hr-banner-icon">
+                        <i class="fa fa-bolt fa-2x"/>
+                    </div>
+                    <div>
+                        <h5 class="mb-0">HR Automation Portal</h5>
+                        <small>Intelligent Requisition &amp; Automated Candidate Screening</small>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 3. Applicant Kanban View Enhancement -->
+    <record id="view_hr_job_applicant_kanban_custom" model="ir.ui.view">
+        <field name="name">hr.job.applicant.kanban.custom</field>
+        <field name="model">hr.job.applicant</field>
+        <field name="inherit_id" ref="hr_automation.view_hr_job_applicant_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="class" add="o_hr_applicant_kanban" separator=" "/>
+            </xpath>
+            <xpath expr="//t[@t-name='card']/div" position="attributes">
+                <attribute name="class" add="o_smooth_kanban_card" separator=" "/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 4. Applicant Form View Enhancement -->
+    <record id="view_hr_job_applicant_form_custom" model="ir.ui.view">
+        <field name="name">hr.job.applicant.form.custom</field>
+        <field name="model">hr.job.applicant</field>
+        <field name="inherit_id" ref="hr_automation.view_hr_job_applicant_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="class" add="o_hr_form" separator=" "/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 5. Requisition List View Enhancement -->
+    <record id="view_hr_job_requisition_list_custom" model="ir.ui.view">
+        <field name="name">hr.job.requisition.list.custom</field>
+        <field name="model">hr.job.requisition</field>
+        <field name="inherit_id" ref="hr_automation.view_hr_job_requisition_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="class" add="o_hr_list_view" separator=" "/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 6. Applicant List View Enhancement -->
+    <record id="view_hr_job_applicant_list_custom" model="ir.ui.view">
+        <field name="name">hr.job.applicant.list.custom</field>
+        <field name="model">hr.job.applicant</field>
+        <field name="inherit_id" ref="hr_automation.view_hr_job_applicant_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="class" add="o_hr_list_view" separator=" "/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
